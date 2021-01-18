@@ -1,0 +1,28 @@
+<div class="container ">
+    <form (ngSubmit)="loginCheck()" >
+        <h2 class="card-heading">Log In</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group"><label for="userName" class="sr-only">UserName</label>
+                    <input type="text" [(ngModel)]="userName" [ngModelOptions]="{standalone: true}" class="form-control" id="userName" placeholder="User Name" required></div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-4">
+                <div class="form-group"><label for="usrPassword" class="sr-only">Password</label>
+                    <input type="password" [(ngModel)]="usrPassword" [ngModelOptions]="{standalone: true}" class="form-control" id="usrPassword" placeholder="Password" required></div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-1">
+                <div class="form-group"><button type="submit" class="btn btn-primary mb-2" (click)="loginCheck()">log In</button></div>
+            </div>    
+            <div class="col-md-3">
+                <div class="form-group"><button type="reset" class="btn btn-primary mb-2">Clear</button></div>
+            </div>             
+        </div>
+        <div style="color: red;" *ngIf="errorMessgae">
+            {{errorMessgae}}
+        </div>
+    </form>
+</div>
