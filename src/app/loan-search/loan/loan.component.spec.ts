@@ -52,11 +52,11 @@ describe('LoanComponent', () => {
    let count=loanSrvc.loans.length;
    component.saveOrUpdateLoan();
   // if(component.vModify==='MODIFY'){
-      expect(loanSrvc.loans.length).toEqual(count);
+    expect(loanSrvc.loans.length).toEqual(count);
   //  }
   //  else{
   //  expect(loanSrvc.loans.length).toEqual(count+1);
-   //}
+  // }
 
  }
  )));
