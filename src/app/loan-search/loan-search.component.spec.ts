@@ -87,6 +87,13 @@ it('ModifyingLoan Deatils', fakeAsync(() => {
   expect(location.path()).toBe('/loanDetails');
 }));
 
+it('should create ',fakeAsync( () => {
+  component.clearSearch;
+  tick(); 
+  expect(component.loanNo&& component.fName && component.lName ).toBeUndefined();
+ }
+ ));
+
 
 });
 

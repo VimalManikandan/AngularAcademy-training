@@ -38,7 +38,14 @@ describe('LoginComponent', () => {
 
   it('should loginCheck Failed', waitForAsync(inject([LoginService], (loginSrvc: LoginService) => {
     expect(loginSrvc.checkLogin('User', 'pwd123')).toBeUndefined();
+    expect(component.errorMessgae).toBeUndefined();
   })));
+
+  it('should loginCheck error messgae', waitForAsync(inject([LoginService], (loginSrvc: LoginService) => {
+    expect(loginSrvc.checkLogin('User', 'pwd123')).toBeUndefined();
+  })));
+
+
 
   it('should create ', () => { 
     expect(component).toBeDefined();

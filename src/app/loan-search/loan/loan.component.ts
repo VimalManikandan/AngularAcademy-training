@@ -74,7 +74,7 @@ export class LoanComponent implements OnInit {
     else{
         let obj=new Loan(this.loanNo, this.fName, this.lName,this.propertyAddress, this.loanAmount, this.loantype, this.lnTerm);
         this.loanService.addOrModifyLoan(obj);   
-        this.fnMeassge='Datils hs been saved..!';
+        this.fnMeassge='Detils hs been saved..!';
     }
   }
 

@@ -58,9 +58,16 @@ describe('LoanComponent', () => {
   //  else{
   //  expect(loanSrvc.loans.length).toEqual(count+1);
   // }
-
  }
  )));
+
+ it('should create ',fakeAsync( () => {
+  component.clearFields();
+  tick(); 
+  expect(component.fName && component.lName && component.propertyAddress && component.loanAmount && component.loantype && component.lnTerm).toBeNull();
+ }
+ ));
+
 
  
 });
