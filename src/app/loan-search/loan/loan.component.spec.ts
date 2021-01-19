@@ -52,6 +52,7 @@ describe('LoanComponent', () => {
    let count=loanSrvc.loans.length;
    component.saveOrUpdateLoan();
   // if(component.vModify==='MODIFY'){
+    //console.log("Testing loan")
     expect(loanSrvc.loans.length).toEqual(count);
   //  }
   //  else{
