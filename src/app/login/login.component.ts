@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { User } from '../models/User.model';
+import {Observable} from 'rxjs';
+
 import { UserAuth } from '../models/UserAuth.model';
 import { LoginService } from './login.service';
+import { ResponseObj } from '../models/ResponseObj.model';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +19,9 @@ export class LoginComponent implements OnInit {
   userName :string;
   usrPassword: string;
   LoggedUser: UserAuth;
+  respObj:ResponseObj;
+  logginStatus: number;
+  user:User;
 
   constructor(private router:Router,
               private loginsrvc: LoginService){        
@@ -25,15 +32,21 @@ export class LoginComponent implements OnInit {
 
   loginCheck(){
       this.errorMessgae='';
-      this.LoggedUser= this.loginsrvc.checkLogin(this.userName,this.usrPassword);
-
-      
-      if(this.LoggedUser=== undefined){
+      this.loginsrvc.LoginUser(this.userName,this.usrPassword)
+        .subscribe(
+          data => {this.user=data;
+               if(this.user!=null){
+             localStorage.setItem('loggedUser',JSON.stringify(this.user)); 
+              this.router.navigate(['home']);
+            }
+            else{
+              this.errorMessgae="Username or Password is incorrect..!";
+            }  
+        },
+        error=>{
           this.errorMessgae="Username or Password is incorrect..!";
-      }
-      else{
-          localStorage.setItem('loggedUser',JSON.stringify(this.LoggedUser)); 
-          this.router.navigate(['home']);   
-      }  
+          console.log("Error Occured");
+        }
+        );
   }
 }

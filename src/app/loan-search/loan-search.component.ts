@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Loan } from '../models/Loan.model';
 import { searchFilter } from '../models/searchFilter.model';
+import { User } from '../models/User.model';
 import { LoanService } from './loan.service';
 
 @Component({
@@ -13,13 +14,12 @@ import { LoanService } from './loan.service';
 export class LoanSearchComponent implements OnInit {
 
   userType: boolean = false;
-
   matching_loans: Loan[];
-
   loanNo: string;
   fName: string;
   lName: string;
   sFilter: searchFilter;
+  user: User;
 
   constructor(private router: Router,
     private loanService: LoanService) { }
@@ -27,14 +27,30 @@ export class LoanSearchComponent implements OnInit {
   ngOnInit(): void {
 
     var userobj = JSON.parse(localStorage.getItem('loggedUser'));
-    if (userobj != null && userobj.type === 'ADMIN') {
+
+    if (userobj != null && userobj.usertype === 'ADMIN') {
       this.userType = true;
+    }
+    if (userobj != null) {
+      this.user = userobj;
+      console.log(this.user.userid);
     }
   }
 
   logingOut() {
-    localStorage.clear();
-    this.router.navigate(['login']);
+
+    this.loanService.logoutUser(this.user).subscribe(
+      data => {
+        localStorage.clear();
+        console.log("-->" + data.message);
+        this.router.navigate(['login']);
+      },
+      error => {
+        console.log("Error occured");
+        window.alert("Server Error..!");
+      }
+    );
+
   }
 
   addNewLoan() {
@@ -43,14 +59,29 @@ export class LoanSearchComponent implements OnInit {
   }
 
   serchLoan() {
-    this.sFilter = new searchFilter(this.loanNo, this.fName, this.lName);
-    this.matching_loans = this.loanService.loanSearch(this.sFilter);
-    this.loanNo = null;
-    this.fName = null;
-    this.lName = null;
+    this.matching_loans = [];
+    console.log("Before Search :" + this.loanNo + " --" + this.fName + "--" + this.lName);
+    if ((this.loanNo == undefined || this.loanNo == null) && (this.fName == undefined || this.fName == null) && (this.lName == undefined || this.lName == null)) {
+      this.matching_loans = [];
+    }
+    else {
+      this.sFilter = new searchFilter(this.loanNo, this.fName, this.lName);
+      this.loanService.loanSearch(this.sFilter).subscribe(
+        data => {
+          this.matching_loans = data;
+        },
+        error => {
+          console.log("Error Happened")
+          window.alert("Something went wrong");
+        }
+      );
+      this.loanNo = null;
+      this.fName = null;
+      this.lName = null;
+    }
   }
-
   viewLoanDetails(selectedLoan: Loan) {
+
     localStorage.setItem('selectedLoan', JSON.stringify(selectedLoan));
     localStorage.setItem('status', "VIEW");
     this.router.navigate(['loanDetails']);
@@ -61,12 +92,29 @@ export class LoanSearchComponent implements OnInit {
     localStorage.setItem('status', "MODIFY");
     this.router.navigate(['loanDetails']);
   }
-
+  deleteLoan(selectedLoan: Loan) {
+    var userobj = JSON.parse(localStorage.getItem('loggedUser'));
+    if (userobj != null) {
+      this.loanService.deleteLoan(selectedLoan.loanno, userobj.userid)
+        .subscribe(
+          data => {
+            if (data.status == 200) {
+              window.alert("Selected loan has deleted");
+            }
+          },
+          error => {
+            console.log("Error Happened");
+            window.alert("Something went wrong");
+          }
+        );
+    }
+    else {
+      console.log("User Not Available");
+    }
+  }
   clearSearch() {
     this.loanNo = null;
-    this.fName = null ;
+    this.fName = null;
     this.lName = null;
   }
-
-
 }

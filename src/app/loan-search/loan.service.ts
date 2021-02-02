@@ -1,56 +1,89 @@
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
 import { Loan } from "../models/Loan.model";
+import { ResponseObj } from "../models/ResponseObj.model";
 import { searchFilter } from "../models/searchFilter.model";
+import { User } from "../models/User.model";
 
 @Injectable()
 export class LoanService {
+ 
 
   count: number;
 
-  loans: Loan[] = [
-    new Loan("loan1001", "Sujith", "AK", "Palakkad-Kerala", 1000, "Housing", 60),
-    new Loan("loan1002", "Vimal", "V", "Palakkad-Kerala", 8000, "Housing", 60),
-    new Loan("loan1003", "Vivek", "V", "Palakkad-Kerala", 1000, "Housing", 60),
-    new Loan("loan1004", "Libindas", "P", "Palakkad-Kerala", 1000, "Housing", 60)
-  ];
+  constructor(private http:HttpClient){}
 
   loanSearch(searchf: searchFilter) {
 
-    var matching_loans = this.loans.filter((item) => {
-      this.count = 0;
-      for (var key in searchf) {
-        if (searchf[key] === undefined) {
-          this.count = this.count + 1;
-        }
-        if ((searchf[key] != undefined) && (item[key] != searchf[key])) {
-          console.log(searchf[key]);
-          return false;
-        }
-      }
-      if (this.count == 3) {
-        return false;
-      }
-      else {
-        return true;
-      }
-    });
-    return matching_loans;
+    let header= new HttpHeaders();
+    header.append('Content-Type', 'application/json');
+    let params = new HttpParams()
+    
+
+    searchf.loanNo=(searchf.loanNo==undefined)?null:searchf.loanNo;
+    searchf.fName=(searchf.fName==undefined)?null:searchf.fName;
+    searchf.lName=(searchf.lName==undefined)?null:searchf.lName;
+
+    params=params.set("loanNo",searchf.loanNo);
+    params=params.set("fName",searchf.fName);
+    params=params.set("lName",searchf.lName);
+
+    console.log(""+searchf.loanNo+"-"+searchf.fName+"-"+searchf.lName);
+    return this.http.get<Loan[]>('http://localhost:8765/loan-server/loanApi/searchLoan', {headers:header,params:params}); 
   }
 
-  addOrModifyLoan(loan: Loan) {
-    let itemIndex = this.loans.findIndex(item => item.loanNo == loan.loanNo);
-    if (loan == undefined) {
-      return false;
-    }
-    if (itemIndex >= 0) {
-      this.loans.splice(itemIndex, itemIndex, loan);
-      return true;
-    }
-    else {
-      this.loans.splice(this.loans.length, this.loans.length, loan);
-      return true;
-    }
-
+  deleteLoan(loanno: string, userid: any) {
+    let header= new HttpHeaders();
+    header.append('Content-Type', 'application/json');
+    let params = new HttpParams();
+    params=params.set("userId",userid);
+    return this.http.delete<ResponseObj>('http://localhost:8765/loan-server/loanApi/deleteLoan/'+loanno,{headers:header,params:params});
   }
+
+  addLoan(loan:Loan):Observable<any>{
+    console.log("Inside addLoan=>",loan);
+    const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type':  'application/json'                
+    })
+  };
+  return this.http.post<Observable<Loan>>('http://localhost:8765/loan-server/loanApi/create',loan,httpOptions);
+  }
+
+  logoutUser(user:User) :Observable<any>{
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'                
+      })
+    };
+    return this.http.post<Observable<ResponseObj>>('http://localhost:8765/login-server/loginApi/logout',user,httpOptions);
+  }
+    // const httpOptions = {
+    //   // headers: new HttpHeaders({
+    //   //   'Content-Type':  'application/json'                
+    //   // })
+    // };
+    //,user,httpOptions
+  // return this.http.get<ResponseObj>('http://localhost:8765/login-server/loginApi/login') ;
+
+ // }
+
+  // addOrModifyLoan(loan: Loan) {
+  //   //let itemIndex = this.loans.findIndex(item => item.loanNo == loan.loanNo);
+  //    if (loan == undefined) {
+  //      return false;
+  //    }
+  
+  //   // if (itemIndex >= 0) {
+  //   //   this.loans.splice(itemIndex, itemIndex, loan);
+  //   //   return true;
+  //   // }
+  //   // else {
+  //   //   this.loans.splice(this.loans.length, this.loans.length, loan);
+  //   //   return true;
+  //   // }
+
+   
 
 }

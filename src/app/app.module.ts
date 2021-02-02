@@ -10,6 +10,7 @@ import { LoginService } from './login/login.service';
 import { LoanSearchComponent } from './loan-search/loan-search.component';
 import { LoanComponent } from './loan-search/loan/loan.component';
 import { LoanService } from './loan-search/loan.service';
+import {HttpClientModule} from '@angular/common/http';
 
 
 @NgModule({
@@ -23,8 +24,8 @@ import { LoanService } from './loan-search/loan.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    CommonModule
-
+    CommonModule,
+    HttpClientModule
   ],
   providers: [LoanService,LoginService],
   bootstrap: [AppComponent]
