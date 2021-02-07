@@ -50,3 +50,46 @@
 a {
     text-decoration: none !important
 }
+
+.navbar {
+    border: none;
+    border-bottom: 1px solid #e7e7e7;
+    border-radius: unset;
+    background-color: #efefef;
+}
+
+.navbar .nav-block {
+    padding-left: 0;
+}
+
+.navbar .nav-block ul li a {
+    cursor: pointer;
+}
+
+.navbar .user-block {
+    text-align: right;
+    padding-top: 3px;
+}
+
+.navbar .user-block span {
+    line-height: 3;
+    color: #a5a5a5;
+}
+
+.navbar .user-block span.usen-name {
+    padding-right: 15px;
+}
+
+.navbar .user-block span.log-out {
+    border-left: 1px solid #cecece;
+    padding-left: 15px;
+}
+
+.navbar .user-block span.log-out a {
+    cursor: pointer;
+    color: #a5a5a5;
+}
+
+.navbar .user-block span.log-out a:hover {
+    color: #333333;
+}

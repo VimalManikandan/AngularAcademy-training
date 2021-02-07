@@ -8,8 +8,7 @@ import { LoanService } from './loan.service';
 @Component({
   selector: 'app-loan-search',
   templateUrl: './loan-search.component.html',
-  styles: [
-  ]
+  styleUrls: ['./loan-search.component.css']
 })
 export class LoanSearchComponent implements OnInit {
 

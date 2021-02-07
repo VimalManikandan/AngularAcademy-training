@@ -37,9 +37,9 @@ describe('LoanComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should addorModifyLoan success', waitForAsync(inject([LoanService], (loanSrvc: LoanService) => {
-    expect(loanSrvc.addOrModifyLoan(new Loan("loan1001", "Sujith", "AK", "Palakkad-Kerala", 1000, "Housing", 60,new User(1,"Vimal","pwd123","ADMIN","ABCD")))).toBeTruthy();
-  })));
+  // it('should addorModifyLoan success', waitForAsync(inject([LoanService], (loanSrvc: LoanService) => {
+  //   expect(loanSrvc.addOrModifyLoan(new Loan("loan1001", "Sujith", "AK", "Palakkad-Kerala", 1000, "Housing", 60,new User(1,"Vimal","pwd123","ADMIN","ABCD")))).toBeTruthy();
+  // })));
 
   it('Should navigate to home', fakeAsync(() => { 
     component.homeNavigate();

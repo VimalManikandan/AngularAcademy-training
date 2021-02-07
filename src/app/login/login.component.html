@@ -13,13 +13,15 @@
                     <input type="password" [(ngModel)]="usrPassword" [ngModelOptions]="{standalone: true}" class="form-control" id="usrPassword" placeholder="Password" required></div>
             </div>
         </div>
-        <div class="row ">
-            <div class="col-md-1">
+        <div>
+            <button type="submit" class="btn btn-primary mb-2" (click)="loginCheck()">log In</button>
+            <button type="reset" class="btn btn-primary mb-2" style="margin-left: 5px;">Clear</button>
+            <!-- <div class="col-md-1">
                 <div class="form-group"><button type="submit" class="btn btn-primary mb-2" (click)="loginCheck()">log In</button></div>
             </div>    
             <div class="col-md-3">
                 <div class="form-group"><button type="reset" class="btn btn-primary mb-2">Clear</button></div>
-            </div>             
+            </div>              -->
         </div>
         <div style="color: red;" *ngIf="errorMessgae">
             {{errorMessgae}}

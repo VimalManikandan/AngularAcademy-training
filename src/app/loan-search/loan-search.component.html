@@ -1,11 +1,31 @@
 <div class="container ">
-    <div class="row rtwo mx-3">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6 col-md-6 nav-block">
+                    <ul class="nav navbar-nav">
+                        <li *ngIf="userType">
+                            <a (click)="addNewLoan()">Add Loan</a>
+                        </li>
+                        <!-- <li>
+                            <a (click)="logingOut()">Logout</a>
+                        </li> -->
+                      </ul>
+                </div>
+                <div class="col-sm-6 col-md-6 user-block">
+                    <span class="usen-name">Hi {{user.username}}</span>
+                    <span class="log-out"><a (click)="logingOut()">Logout</a></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="row rtwo mx-3">
         <span style="float: right;">
             <button type="button" *ngIf="userType" class="btn btn-primary btn-space mb-2 " style="margin-right: 15px;" (click)="addNewLoan()" >Add
                 Loan</button>
             <button type="button" class="btn btn-primary btn-space mb-2" (click)="logingOut()" style="margin-right: 15px;">Logout</button>
         </span>
-    </div>
+    </div> -->
     <form (ngSubmit)="serchLoan()" >
         <h2 class="card-heading ">Loan Search</h2>
         <div class="row ">
@@ -28,13 +48,15 @@
                 </div>
             </div>
         </div>
-        <div class="row  mx-3">
-            <div class="col-md-2">
+        <div>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+            <button type="reset" class="btn btn-primary mb-2" style="margin-left: 5px;">Clear</button>
+            <!-- <div class="col-md-2">
                 <div class="form-group"><button type="submit" class="btn btn-primary mb-2">Search</button></div>
             </div>
             <div class="col-md-2">
                 <div class="form-group"><button type="reset" class="btn btn-primary mb-2">Clear</button></div>
-            </div>
+            </div> -->
         </div>
     </form>
 

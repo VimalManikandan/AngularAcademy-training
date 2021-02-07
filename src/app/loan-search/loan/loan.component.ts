@@ -7,8 +7,7 @@ import { LoanService } from '../loan.service';
 @Component({
   selector: 'app-loan',
   templateUrl: './loan.component.html',
-  styles: [
-  ]
+  styleUrls: ['./loan.component.css']
 })
 export class LoanComponent implements OnInit {
 
